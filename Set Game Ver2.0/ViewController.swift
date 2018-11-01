@@ -41,8 +41,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBAction func threeMoreButton(_ sender: UIButton) {
         if self.baseView.subviews.count <= 24{
+            
             self.grid.cellCount += 3
             createCardViewsAndPutThemAtDeck(numberOfCardViews: 3)
+            self.deckLabel.text = "Deck:\(self.cardDeck.allCards.count)"
             moveCardViewsToitsLatestLocaotion()
             if checkIfaSetExists(){
                 self.score -= 1
@@ -165,9 +167,12 @@ class ViewController: UIViewController {
                 if self.selectedCardView.count>2{
                     if cardDeck.checkSet(cardViews: self.selectedCardView){
                         for cardView in self.selectedCardView{
+                            
                             cardView.layer.borderWidth = 4.0
                             cardView.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
                         }
+                        self.setNumber += 1
+                        self.setLabel.text = "Set:\(self.setNumber)"
                         cardDeck.gameStatus = .matched
                         self.score += 3
                         self.scoreLabel.text = "Score:" + String(self.score)
@@ -189,7 +194,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+    var setNumber = 0
     //初始化
     func initializeTheView(){
         cardDeck.createAllCards()
@@ -198,6 +203,9 @@ class ViewController: UIViewController {
                 (self.baseView.subviews.last)!.removeFromSuperview()
             }
         }
+        self.setNumber = 0
+        self.setLabel.text = "Set:\(self.setNumber)"
+        
         self.selectedCardView.removeAll()
         self.cardDeck.gameStatus = .neither
         self.score = 0
@@ -208,6 +216,7 @@ class ViewController: UIViewController {
         self.grid.cellCount = 12
         //创建12个cardView放在deckLabel
         createCardViewsAndPutThemAtDeck(numberOfCardViews: 12)
+        self.deckLabel.text = "Deck:\(self.cardDeck.allCards.count)"
         //更新位置
         moveCardViewsToitsLatestLocaotion()
     }
