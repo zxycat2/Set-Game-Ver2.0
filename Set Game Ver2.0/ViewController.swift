@@ -299,7 +299,7 @@ class ViewController: UIViewController {
         }
         
     }
-    //洗牌专用动画
+    //洗牌专用动画(懒得看动画用来加速也不错)
     @objc func shuffleAnime(){
         for cardViewIndex in 2...self.baseView.subviews.count-1{
             UIView.transition(with: self.baseView.subviews[cardViewIndex], duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations:{ (self.baseView.subviews[cardViewIndex] as! CardView).faceUp = false}, completion: {finished in
@@ -307,9 +307,14 @@ class ViewController: UIViewController {
                     (self.baseView.subviews[cardViewIndex] as! CardView).updateCenterPoints()
                     UIView.transition(with: self.baseView.subviews[cardViewIndex], duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {(self.baseView.subviews[cardViewIndex] as! CardView).faceUp = true
                         
-                    }, completion: nil)}
+                    }, completion: nil)
+                }
                 )
             })
+        }
+        
+        func flipUP(cardViewIndex:Int){
+            
         }
     }
     //当旋转时，更新cradView的位置(无动画）
