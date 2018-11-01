@@ -74,6 +74,10 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck:xxx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXX-m9-fza">
                                         <rect key="frame" x="0.0" y="608.33333333333337" width="99" height="27.666666666666629"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="27.670000000000002" id="BXE-1H-CJi"/>
+                                            <constraint firstAttribute="width" constant="99" id="OmL-Cc-Uzv"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -81,30 +85,30 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set:xxx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usx-me-9H0">
                                         <rect key="frame" x="282" y="609" width="99" height="27.666666666666629"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="99" id="b1c-69-O0E"/>
+                                            <constraint firstAttribute="height" constant="27.670000000000002" id="kP1-Ha-Tbc"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="usx-me-9H0" firstAttribute="width" secondItem="JRq-cs-J83" secondAttribute="height" multiplier="33:212" id="Vtf-dC-Baa"/>
-                                    <constraint firstItem="YXX-m9-fza" firstAttribute="width" secondItem="JRq-cs-J83" secondAttribute="height" multiplier="33:212" id="hrL-OA-auM"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JRq-cs-J83" secondAttribute="bottom" constant="70" id="06Y-Zg-3hx"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="usx-me-9H0" secondAttribute="trailing" constant="16" id="EYr-iD-6XG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="usx-me-9H0" secondAttribute="trailing" constant="16" id="4xU-0z-NEk"/>
                             <constraint firstItem="JRq-cs-J83" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="ExS-4f-2d7"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YXX-m9-fza" secondAttribute="bottom" constant="70" id="Fu8-27-qRa"/>
                             <constraint firstItem="A9Y-Wo-qSY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="17" id="IqA-Ya-2hn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="usx-me-9H0" secondAttribute="bottom" constant="69.333333333333371" id="Kbl-85-oM7"/>
+                            <constraint firstItem="YXX-m9-fza" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="17" id="MUe-UF-QC4"/>
                             <constraint firstItem="JRq-cs-J83" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="17" id="Nnc-ld-dtA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YXX-m9-fza" secondAttribute="bottom" constant="70" id="RWK-GV-NHR"/>
                             <constraint firstItem="A9Y-Wo-qSY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="8.3333333333333712" id="SRd-py-7mY"/>
-                            <constraint firstItem="YXX-m9-fza" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="17" id="Vts-o8-xF4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A9Y-Wo-qSY" secondAttribute="trailing" constant="16" id="cXo-RF-yi9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="usx-me-9H0" secondAttribute="bottom" constant="69.333333333333371" id="dDT-VQ-iwW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JRq-cs-J83" secondAttribute="trailing" constant="16" id="g2Q-6a-j2g"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

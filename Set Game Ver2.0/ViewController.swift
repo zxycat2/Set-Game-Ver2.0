@@ -42,56 +42,56 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     var score = 0
     @IBOutlet weak var scoreLabel: UILabel!
-//    @IBAction func threeMoreButton(_ sender: UIButton) {
-//        if displayingCards.count <= 24{
-//            for _ in 1...3{
-//                displayingCards.append(cardDeck.getRandomCard())
-//            }
-//            if checkIfaSetExists(){
-//                self.score -= 1
-//                self.scoreLabel.text = "Score:" + String(self.score)
-//            }
-//        }
-//    }
-//    @IBAction func restartButton(_ sender: UIButton) {
-//        initializeTheView()
-//    }
-//    @IBAction func hintButton(_ sender: UIButton) {
+    @IBAction func threeMoreButton(_ sender: UIButton) {
+        if self.baseView.subviews.count <= 24{
+            self.grid.cellCount += 3
+            createCardViewsAndPutThemAtDeck(numberOfCardViews: 3)
+            moveCardViewsToitsLatestLocaotion()
+            if checkIfaSetExists(){
+                self.score -= 1
+                self.scoreLabel.text = "Score:" + String(self.score)
+            }
+        }
+    }
+    @IBAction func restartButton(_ sender: UIButton) {
+        initializeTheView()
+    }
+    @IBAction func hintButton(_ sender: UIButton) {
 //        for cardView in self.selectedCardView{
 //            cardView.layer.borderWidth = 4.0
 //            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 //            cardView.isChosen = false
 //        }
 //        self.selectedCardView.removeAll()
-//        if checkIfaSetExists(){
-//            for cardView in hintCardViews{
-//                cardView.layer.borderWidth = 4.0
-//                cardView.layer.borderColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-//            }
-//        }
-//    }
+        if checkIfaSetExists(){
+            for cardView in hintCardViews{
+                cardView.layer.borderWidth = 5.0
+                cardView.layer.borderColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            }
+        }
+    }
     var hintCardViews:[CardView] = []
     //测试当前显示的卡里有没有set(有重复的，待改进）
-//    func checkIfaSetExists() -> Bool{
-//        var tempThreeCardViews:[CardView] = []
-//        var verdic = false
-//        for indexOne in 0...self.displayingCards.count-3{
-//            for indexTwo in indexOne+1...self.displayingCards.count-2{
-//                for indexThree in indexTwo+1...self.displayingCards.count-1{
-//                    tempThreeCardViews.removeAll()
-//                    tempThreeCardViews += [self.baseView.subviews[indexOne] as! CardView, self.baseView.subviews[indexTwo] as! CardView, self.baseView.subviews[indexThree] as! CardView]
-//
-//                    if cardDeck.checkSet(cardViews: tempThreeCardViews){
-//                        self.hintCardViews = tempThreeCardViews
-//                        verdic = true
-//                        return verdic
-//                    }
-//
-//                }
-//            }
-//        }
-//        return verdic
-//    }
+    func checkIfaSetExists() -> Bool{
+        var tempThreeCardViews:[CardView] = []
+        var verdic = false
+        for indexOne in 2...self.baseView.subviews.count-3{
+            for indexTwo in indexOne+1...self.baseView.subviews.count-2{
+                for indexThree in indexTwo+1...self.baseView.subviews.count-1{
+                    tempThreeCardViews.removeAll()
+                    tempThreeCardViews += [self.baseView.subviews[indexOne] as! CardView, self.baseView.subviews[indexTwo] as! CardView, self.baseView.subviews[indexThree] as! CardView]
+
+                    if cardDeck.checkSet(cardViews: tempThreeCardViews){
+                        self.hintCardViews = tempThreeCardViews
+                        verdic = true
+                        return verdic
+                    }
+
+                }
+            }
+        }
+        return verdic
+    }
     
     //临时存最多三个选中的CardView
     var selectedCardView:[CardView] = []
@@ -190,6 +190,11 @@ class ViewController: UIViewController {
     //初始化
     func initializeTheView(){
         cardDeck.createAllCards()
+        if self.baseView.subviews.count>2{
+            for _ in 2...self.baseView.subviews.count-1{
+                (self.baseView.subviews.last)!.removeFromSuperview()
+            }
+        }
         self.selectedCardView.removeAll()
         self.cardDeck.gameStatus = .neither
         self.score = 0
@@ -197,7 +202,6 @@ class ViewController: UIViewController {
         self.timeLabel.text = "Time:"
         self.hintCardViews.removeAll()
 //        self.displayingCards.removeAll()
-        //临时
         self.grid.cellCount = 12
         //创建12个cardView放在deckLabel
         createCardViewsAndPutThemAtDeck(numberOfCardViews: 12)
@@ -229,7 +233,6 @@ class ViewController: UIViewController {
         for _ in 1...numberOfCardViews{
             let card = self.cardDeck.getRandomCard()
             let deckFrame = CGRect(x: 0, y: self.baseView.bounds.height - (self.grid[0]?.height)!, width: (self.grid[0]?.width)!, height: (self.grid[0]?.height)!)
-//            let cardView = CardView(frame:self.deckLabel.frame)
             let cardView = CardView(frame:deckFrame)
             cardView.faceUp = false
             cardView.color = card.color
@@ -247,8 +250,8 @@ class ViewController: UIViewController {
     }
     //速度调节
     private struct speedOfAnime {
-        static let moveTime = 0.3
-        static let flipTime = 0.3
+        static let moveTime = 0.2
+        static let flipTime = 0.2
     }
     var indexForAnime = 2
     //把所有CardView重新定位（动画）
@@ -304,7 +307,6 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         if self.needInitialize {
             self.grid.frame = CGRect(x: 0, y: 0, width: self.baseView.bounds.width, height: self.baseView.bounds.height - self.setLabel.bounds.height)
-//            self.grid.frame = self.baseView.bounds
             initializeTheView()
             self.needInitialize = false
         }
@@ -313,6 +315,8 @@ class ViewController: UIViewController {
             self.updateCardsViewWithoutAnimation()
         }
         self.deviceOriantation = UIDevice.current.orientation
+        
+        print("stuff")
         
     }
 
