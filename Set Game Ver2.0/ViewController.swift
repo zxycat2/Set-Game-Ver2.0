@@ -23,14 +23,11 @@ extension Array where Element: Equatable {
 class ViewController: UIViewController {
     var needInitialize = true
     @IBOutlet weak var baseView: UIView!{
-//        didSet{
-//            let swipe = UISwipeGestureRecognizer(target: self, action: #selector(shuffle))
-//            swipe.direction = [.down]
-//            baseView.addGestureRecognizer(swipe)
-//
-//        }
         didSet{
-            _ = 1
+            let swipe = UISwipeGestureRecognizer(target: self, action: #selector(shuffle))
+            swipe.direction = [.down]
+            baseView.addGestureRecognizer(swipe)
+
         }
     }
     @IBOutlet weak var deckLabel: UILabel!
@@ -57,12 +54,12 @@ class ViewController: UIViewController {
         initializeTheView()
     }
     @IBAction func hintButton(_ sender: UIButton) {
-//        for cardView in self.selectedCardView{
-//            cardView.layer.borderWidth = 4.0
-//            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//            cardView.isChosen = false
-//        }
-//        self.selectedCardView.removeAll()
+        for cardView in self.selectedCardView{
+            cardView.layer.borderWidth = 4.0
+            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            cardView.isChosen = false
+        }
+        self.selectedCardView.removeAll()
         if checkIfaSetExists(){
             for cardView in hintCardViews{
                 cardView.layer.borderWidth = 5.0
@@ -96,16 +93,24 @@ class ViewController: UIViewController {
     //临时存最多三个选中的CardView
     var selectedCardView:[CardView] = []
     //洗牌
-//    @objc func shuffle(){
-//        var newDisplayingCards = self.displayingCards
-//        for index in 0..<newDisplayingCards.count {
-//            let newIndex = Int(arc4random_uniform(UInt32(newDisplayingCards.count-index))) + index
-//            if index != newIndex {
-//                newDisplayingCards.swapAt(index, newIndex)
-//            }
-//        }
-//        self.displayingCards = newDisplayingCards
-//    }
+    @objc func shuffle(){
+        var newBaseViewSubviews = self.baseView.subviews
+        newBaseViewSubviews.remove(at: 0)
+        newBaseViewSubviews.remove(at: 0)
+        for index in 0..<newBaseViewSubviews.count {
+            let newIndex = Int(arc4random_uniform(UInt32(newBaseViewSubviews.count-index))) + index
+            if index != newIndex {
+                newBaseViewSubviews.swapAt(index, newIndex)
+            }
+        }
+        for _ in 2...self.baseView.subviews.count-1{
+            (self.baseView.subviews.last)?.removeFromSuperview()
+        }
+        for cardView in newBaseViewSubviews{
+            self.baseView.addSubview(cardView)
+        }
+        self.shuffleAnime()
+    }
     var cardDeck = CardDeck()
     //应当在显示的卡片（不是CardView是Card）
 //    var displayingCards:[Card] = []{
@@ -120,72 +125,70 @@ class ViewController: UIViewController {
     lazy var grid = Grid(layout: Grid.Layout.aspectRatio(CGFloat(1.0)), frame: baseView.bounds)
   
     //点击卡片后进行操作 choose
-//    @objc func choose(sender: UITapGestureRecognizer){
-//        for cardView in baseView.subviews{
-//            if cardView.frame.contains(sender.location(in: baseView)){
-//                print("stuff")
-//                switch cardDeck.gameStatus{
-//                    case .neither:
-//                        if (cardView as! CardView).isChosen{
-//                            cardView.layer.borderWidth = 4.0
-//                            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//                            (cardView as! CardView).isChosen = false
-//                            self.selectedCardView.remove((cardView as! CardView))
-//                        }else{
-//                            cardView.layer.borderWidth = 4.0
-//                            cardView.layer.borderColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
-//                            (cardView as! CardView).isChosen = true
-//                            self.selectedCardView.append((cardView as! CardView))
-//                    }
-//                    case .matched:
-//                        for cardView in self.selectedCardView{
-//                            for card in self.displayingCards{
-//                                if card.serialNumber == cardView.serialNumber{
-//                                    self.displayingCards.remove(card)
-//                                    break
-//                                }
-//                            }
-//                    }
-//                    self.selectedCardView.removeAll()
-//                    self.cardDeck.gameStatus = .neither
-//                    case .notMatched:
-//                        for cardView in self.selectedCardView{
-//                            cardView.layer.borderWidth = 4.0
-//                            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//                            cardView.isChosen = false
-//                    }
-//                    self.selectedCardView.removeAll()
-//                    self.cardDeck.gameStatus = .neither
-//
-//                }
-//
-//                if self.selectedCardView.count>2{
-//                    if cardDeck.checkSet(cardViews: self.selectedCardView){
-//                        for cardView in self.selectedCardView{
-//                            cardView.layer.borderWidth = 4.0
-//                            cardView.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-//                        }
-//                        cardDeck.gameStatus = .matched
-//                        self.score += 3
-//                        self.scoreLabel.text = "Score:" + String(self.score)
-//                        self.endTime = Date()
-//                        self.timeLabel.text = "Time:" + String(format: "%.2f", (self.endTime.timeIntervalSince(self.startTime))) + "s"
-//                        self.startTime = Date()
-//
-//                    }else{
-//                        for cardView in self.selectedCardView{
-//                            cardView.layer.borderWidth = 4.0
-//                            cardView.layer.borderColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-//                        }
-//                        cardDeck.gameStatus = .notMatched
-//                        self.score -= 1
-//                        self.scoreLabel.text = "Score:" + String(self.score)
-//                    }
-//                }
-//                break
-//            }
-//        }
-//    }
+    @objc func choose(sender: UITapGestureRecognizer){
+        for cardView in baseView.subviews{
+            if cardView.frame.contains(sender.location(in: baseView))&&cardView.frame != self.setLabel.frame&&cardView.frame != self.deckLabel.frame{
+                print("choose")
+                switch cardDeck.gameStatus{
+                    case .neither:
+                        if (cardView as! CardView).isChosen{
+                            cardView.layer.borderWidth = 4.0
+                            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                            (cardView as! CardView).isChosen = false
+                            self.selectedCardView.remove((cardView as! CardView))
+                        }else{
+                            cardView.layer.borderWidth = 4.0
+                            cardView.layer.borderColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+                            (cardView as! CardView).isChosen = true
+                            self.selectedCardView.append((cardView as! CardView))
+                    }
+                    case .matched:
+                        for cardView in self.selectedCardView{
+                            cardView.removeFromSuperview()
+                            //todo:动画
+                    }
+                    self.grid.cellCount -= 3
+                    moveCardViewsToitsLatestLocaotion()
+                    self.selectedCardView.removeAll()
+                    self.cardDeck.gameStatus = .neither
+                    case .notMatched:
+                        for cardView in self.selectedCardView{
+                            cardView.layer.borderWidth = 4.0
+                            cardView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                            cardView.isChosen = false
+                    }
+                    self.selectedCardView.removeAll()
+                    self.cardDeck.gameStatus = .neither
+
+                }
+
+                if self.selectedCardView.count>2{
+                    if cardDeck.checkSet(cardViews: self.selectedCardView){
+                        for cardView in self.selectedCardView{
+                            cardView.layer.borderWidth = 4.0
+                            cardView.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                        }
+                        cardDeck.gameStatus = .matched
+                        self.score += 3
+                        self.scoreLabel.text = "Score:" + String(self.score)
+                        self.endTime = Date()
+                        self.timeLabel.text = "Time:" + String(format: "%.2f", (self.endTime.timeIntervalSince(self.startTime))) + "s"
+                        self.startTime = Date()
+
+                    }else{
+                        for cardView in self.selectedCardView{
+                            cardView.layer.borderWidth = 4.0
+                            cardView.layer.borderColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+                        }
+                        cardDeck.gameStatus = .notMatched
+                        self.score -= 1
+                        self.scoreLabel.text = "Score:" + String(self.score)
+                    }
+                }
+                break
+            }
+        }
+    }
     
     //初始化
     func initializeTheView(){
@@ -243,8 +246,8 @@ class ViewController: UIViewController {
             cardView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             baseView.addSubview(cardView)
             //加入手势
-//            let tap = UITapGestureRecognizer(target: self, action: #selector(choose))
-//            cardView.addGestureRecognizer(tap)
+            let tap = UITapGestureRecognizer(target: self, action: #selector(choose))
+            cardView.addGestureRecognizer(tap)
         }
         
     }
@@ -286,6 +289,19 @@ class ViewController: UIViewController {
             })
         }
         
+    }
+    //洗牌专用动画
+    @objc func shuffleAnime(){
+        for cardViewIndex in 2...self.baseView.subviews.count-1{
+            UIView.transition(with: self.baseView.subviews[cardViewIndex], duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations:{ (self.baseView.subviews[cardViewIndex] as! CardView).faceUp = false}, completion: {finished in
+                UIView.transition(with: self.baseView.subviews[cardViewIndex], duration: speedOfAnime.moveTime, options: [], animations: {self.baseView.subviews[cardViewIndex].frame = self.grid[cardViewIndex - 2]!.insetBy(dx: 10, dy: 10)}, completion:    { finished in
+                    (self.baseView.subviews[cardViewIndex] as! CardView).updateCenterPoints()
+                    UIView.transition(with: self.baseView.subviews[cardViewIndex], duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {(self.baseView.subviews[cardViewIndex] as! CardView).faceUp = true
+                        
+                    }, completion: nil)}
+                )
+            })
+        }
     }
     //当旋转时，更新cradView的位置(无动画）
     func updateCardsViewWithoutAnimation(){
