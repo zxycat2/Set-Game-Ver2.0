@@ -21,6 +21,10 @@ extension Array where Element: Equatable {
 //扩展displaycards的remove object方法
 
 class ViewController: UIViewController {
+    //选中set动画相关变量
+    lazy var animator = UIDynamicAnimator(referenceView: self.baseView)
+    var cardBehavior = CardViewBehavior()
+    
     var needInitialize = true
     @IBOutlet weak var baseView: UIView!{
         didSet{
@@ -170,7 +174,15 @@ class ViewController: UIViewController {
                             
                             cardView.layer.borderWidth = 4.0
                             cardView.layer.borderColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                            
+                            //分层
+                            cardView.layer.zPosition = 3
+                            //todo:搞四处飞散的动画
+//                            cardBehavior.addItem(item: cardView)
                         }
+                        print("?")
+                        moveCardsToSetLabel(cardViews: self.selectedCardView)
+                        
                         self.setNumber += 1
                         self.setLabel.text = "Set:\(self.setNumber)"
                         cardDeck.gameStatus = .matched
@@ -192,6 +204,21 @@ class ViewController: UIViewController {
                 }
                 break
             }
+        }
+    }
+    
+    //选中set， 爆炸后的移动动画
+    @objc func moveCardsToSetLabel(cardViews:[CardView]) {
+        for cardView in self.selectedCardView{
+            self.cardBehavior.removeItem(item:cardView)
+        }
+        for cardView in self.selectedCardView{
+            UIView.transition(with: cardView, duration: speedOfAnime.moveTime, options: [], animations: {cardView.frame = CGRect(x: self.baseView.bounds.width - cardView.bounds.width, y: self.baseView.bounds.height - cardView.bounds.height, width: cardView.bounds.width, height: cardView.bounds.height)}, completion:    { finished in
+                UIView.transition(with: cardView, duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {cardView.faceUp = false
+                    
+                }, completion:nil)
+                }
+                )
         }
     }
     var setNumber = 0
@@ -219,6 +246,10 @@ class ViewController: UIViewController {
         self.deckLabel.text = "Deck:\(self.cardDeck.allCards.count)"
         //更新位置
         moveCardViewsToitsLatestLocaotion()
+        
+        //animator
+        self.animator.addBehavior(cardBehavior)
+        
     }
     //根据displayingCards来创造cardView
 //    func createCardViewAccordingToDisplayingCard(){
@@ -254,6 +285,8 @@ class ViewController: UIViewController {
             cardView.serialNumber = card.serialNumber
             cardView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             baseView.addSubview(cardView)
+            //分层
+            cardView.layer.zPosition = 2
             //加入手势
             let tap = UITapGestureRecognizer(target: self, action: #selector(choose))
             cardView.addGestureRecognizer(tap)
@@ -271,7 +304,7 @@ class ViewController: UIViewController {
     func moveCardViewsToitsLatestLocaotion() {
         //移动，翻回来
         func animeStuff(){
-            UIView.transition(with: self.baseView.subviews[self.indexForAnime], duration: speedOfAnime.moveTime, options: [], animations: {self.baseView.subviews[self.indexForAnime].frame = self.grid[self.indexForAnime - 2]!.insetBy(dx: 10, dy: 10)}, completion:    { finished in
+            UIView.transition(with: self.baseView.subviews[self.indexForAnime], duration: speedOfAnime.moveTime, options: [.curveEaseInOut], animations: {self.baseView.subviews[self.indexForAnime].frame = self.grid[self.indexForAnime - 2]!.insetBy(dx: 10, dy: 10)}, completion:    { finished in
                 (self.baseView.subviews[self.indexForAnime] as! CardView).updateCenterPoints()
                 UIView.transition(with: self.baseView.subviews[self.indexForAnime], duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {(self.baseView.subviews[self.indexForAnime] as! CardView).faceUp = true
                     
@@ -312,10 +345,6 @@ class ViewController: UIViewController {
                 )
             })
         }
-        
-        func flipUP(cardViewIndex:Int){
-            
-        }
     }
     //当旋转时，更新cradView的位置(无动画）
     func updateCardsViewWithoutAnimation(){
@@ -328,7 +357,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.setLabel.layer.zPosition = .greatestFiniteMagnitude
         self.deckLabel.layer.zPosition = .greatestFiniteMagnitude
-
+        //分层
+        self.baseView.layer.zPosition = 1
+        self.setLabel.layer.zPosition = 10
+        self.deckLabel.layer.zPosition = 10
+        
         self.startTime = Date()
     }
     
@@ -349,7 +382,7 @@ class ViewController: UIViewController {
         print("stuff")
         
     }
-
+    
 
 }
 

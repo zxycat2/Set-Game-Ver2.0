@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB16C777218DF2DE00540603 /* CardViewBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB16C776218DF2DE00540603 /* CardViewBehavior.swift */; };
 		BB52D9FF217B8FF50092EC9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB52D9FE217B8FF50092EC9C /* AppDelegate.swift */; };
 		BB52DA01217B8FF50092EC9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB52DA00217B8FF50092EC9C /* ViewController.swift */; };
 		BB52DA04217B8FF50092EC9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB52DA02217B8FF50092EC9C /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB16C776218DF2DE00540603 /* CardViewBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewBehavior.swift; sourceTree = "<group>"; };
 		BB52D9FB217B8FF50092EC9C /* Set Game Ver2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set Game Ver2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB52D9FE217B8FF50092EC9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB52DA00217B8FF50092EC9C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		BB52D9FD217B8FF50092EC9C /* Set Game Ver2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				BB16C776218DF2DE00540603 /* CardViewBehavior.swift */,
 				BB52D9FE217B8FF50092EC9C /* AppDelegate.swift */,
 				BB52DA1A217BA39B0092EC9C /* CardView.swift */,
 				BB52DA00217B8FF50092EC9C /* ViewController.swift */,
@@ -150,6 +153,7 @@
 				BB52DA01217B8FF50092EC9C /* ViewController.swift in Sources */,
 				BB52DA15217B98D40092EC9C /* CardDeck.swift in Sources */,
 				BB52D9FF217B8FF50092EC9C /* AppDelegate.swift in Sources */,
+				BB16C777218DF2DE00540603 /* CardViewBehavior.swift in Sources */,
 				BB52DA11217B90590092EC9C /* Grid.swift in Sources */,
 				BB52DA1B217BA39B0092EC9C /* CardView.swift in Sources */,
 				BB52DA13217B97910092EC9C /* Card.swift in Sources */,
