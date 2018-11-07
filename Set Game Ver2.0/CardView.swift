@@ -27,7 +27,7 @@ class CardView: UIView {
     var attributesArray:[String]{
         return [self.color.rawValue, self.shape.rawValue, self.content.rawValue, self.number.rawValue]
     }
-    var color:Card.colors = Card.colors.red {
+    var color:SetGameCard.colors = SetGameCard.colors.red {
         didSet{
             switch color {
             case .red:
@@ -40,12 +40,12 @@ class CardView: UIView {
             }
         }
     }
-    var shape:Card.shapes = Card.shapes.circle{
+    var shape:SetGameCard.shapes = SetGameCard.shapes.circle{
         didSet{
             setNeedsDisplay()
         }
     }
-    var number:Card.numbers = Card.numbers.one {
+    var number:SetGameCard.numbers = SetGameCard.numbers.one {
         didSet{
             self.centerPoints.removeAll()
             switch number {
@@ -59,7 +59,7 @@ class CardView: UIView {
             }
         }
     }
-    var content:Card.contnets = Card.contnets.empty{
+    var content:SetGameCard.contnets = SetGameCard.contnets.empty{
         didSet{
             setNeedsDisplay()
         }

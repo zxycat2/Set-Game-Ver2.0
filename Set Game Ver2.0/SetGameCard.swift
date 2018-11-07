@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-struct Card:Equatable{
-    var color:Card.colors
-    var shape:Card.shapes
-    var number:Card.numbers
-    var content:Card.contnets
+struct SetGameCard:Equatable{
+    var color:SetGameCard.colors
+    var shape:SetGameCard.shapes
+    var number:SetGameCard.numbers
+    var content:SetGameCard.contnets
     var serialNumber = 0
     
     enum shapes:String {

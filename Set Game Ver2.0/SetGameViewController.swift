@@ -20,7 +20,7 @@ extension Array where Element: Equatable {
 }
 //扩展displaycards的remove object方法
 
-class ViewController: UIViewController {
+class SetGameViewController: UIViewController {
     //选中set动画相关变量
     lazy var animator = UIDynamicAnimator(referenceView: self.baseView)
     var cardBehavior = CardViewBehavior()
@@ -179,7 +179,7 @@ class ViewController: UIViewController {
                             //todo:搞四处飞散的动画
                             cardBehavior.addItem(item: cardView)
                         }
-                        print("?")
+                        //丢到setLabel
                         _ = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: {_ in self.moveCardsToSetLabel(cardViews: self.selectedCardView)})
                         
                         self.setNumber += 1
@@ -208,10 +208,12 @@ class ViewController: UIViewController {
     
     //选中set， 爆炸后的移动动画
     @objc func moveCardsToSetLabel(cardViews:[CardView]) {
+        
         for cardView in self.selectedCardView{
             self.cardBehavior.removeItem(item:cardView)
         }
         for cardView in self.selectedCardView{
+            print(cardView.frame)
             UIView.transition(with: cardView, duration: speedOfAnime.moveTime, options: [], animations: {cardView.frame = CGRect(x: self.baseView.bounds.width - cardView.bounds.width, y: self.baseView.bounds.height - cardView.bounds.height, width: cardView.bounds.width, height: cardView.bounds.height)}, completion:    { finished in
                 UIView.transition(with: cardView, duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {cardView.faceUp = false
                     

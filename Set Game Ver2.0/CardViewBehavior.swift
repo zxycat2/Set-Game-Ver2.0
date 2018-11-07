@@ -24,11 +24,25 @@ class CardViewBehavior: UIDynamicBehavior {
         return behavior
     }()
     
+    var pushCount = 1
     func push(item:UIDynamicItem) {
         let pushBehaviro = UIPushBehavior(items: [item], mode:.instantaneous)
         pushBehaviro.magnitude = 8
-        pushBehaviro.angle = 0.5*CGFloat.pi
-        
+        switch self.pushCount {
+        case 1:
+            pushBehaviro.angle = 0.5*CGFloat.pi
+        case 2:
+            pushBehaviro.angle = 1.25*CGFloat.pi
+        case 3:
+            pushBehaviro.angle = 1.75*CGFloat.pi
+        default:
+            break
+        }
+        if self.pushCount<=3{
+            self.pushCount += 1
+        }else{
+            self.pushCount = 1
+        }
         pushBehaviro.action = { [unowned pushBehaviro, weak self] in
             self?.removeChildBehavior(pushBehaviro)
         }
