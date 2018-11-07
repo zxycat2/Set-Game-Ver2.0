@@ -151,7 +151,6 @@ class ViewController: UIViewController {
                     case .matched:
                         for cardView in self.selectedCardView{
                             cardView.removeFromSuperview()
-                            //todo:动画
                     }
                     self.grid.cellCount -= 3
                     moveCardViewsToitsLatestLocaotion()
@@ -178,10 +177,10 @@ class ViewController: UIViewController {
                             //分层
                             cardView.layer.zPosition = 3
                             //todo:搞四处飞散的动画
-//                            cardBehavior.addItem(item: cardView)
+                            cardBehavior.addItem(item: cardView)
                         }
                         print("?")
-                        moveCardsToSetLabel(cardViews: self.selectedCardView)
+                        _ = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: {_ in self.moveCardsToSetLabel(cardViews: self.selectedCardView)})
                         
                         self.setNumber += 1
                         self.setLabel.text = "Set:\(self.setNumber)"
@@ -239,7 +238,6 @@ class ViewController: UIViewController {
         self.scoreLabel.text = "Score:" + String(0)
         self.timeLabel.text = "Time:"
         self.hintCardViews.removeAll()
-//        self.displayingCards.removeAll()
         self.grid.cellCount = 12
         //创建12个cardView放在deckLabel
         createCardViewsAndPutThemAtDeck(numberOfCardViews: 12)
@@ -251,26 +249,6 @@ class ViewController: UIViewController {
         self.animator.addBehavior(cardBehavior)
         
     }
-    //根据displayingCards来创造cardView
-//    func createCardViewAccordingToDisplayingCard(){
-//        if self.displayingCards.count>0{
-//            for index in 0...grid.cellCount-1{
-//                let card = self.displayingCards[index]
-//                let cardView = CardView(frame: (grid[index]!).insetBy(dx: 10.0, dy: 10.0))
-//                cardView.color = card.color
-//                cardView.shape = card.shape
-//                cardView.content = card.content
-//                cardView.number = card.number
-//                cardView.serialNumber = card.serialNumber
-//                cardView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//                baseView.addSubview(cardView)
-//                //加入手势
-//                let tap = UITapGestureRecognizer(target: self, action: #selector(choose))
-//                cardView.addGestureRecognizer(tap)
-//            }
-//
-//        }
-//    }
     //创建cardView并放在deckLabel处
     func createCardViewsAndPutThemAtDeck(numberOfCardViews:Int){
         for _ in 1...numberOfCardViews{
