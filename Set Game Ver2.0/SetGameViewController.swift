@@ -214,7 +214,10 @@ class SetGameViewController: UIViewController {
         }
         for cardView in self.selectedCardView{
             print(cardView.frame)
-            UIView.transition(with: cardView, duration: speedOfAnime.moveTime, options: [], animations: {cardView.frame = CGRect(x: self.baseView.bounds.width - cardView.bounds.width, y: self.baseView.bounds.height - cardView.bounds.height, width: cardView.bounds.width, height: cardView.bounds.height)}, completion:    { finished in
+            UIView.transition(with: cardView, duration: speedOfAnime.moveTime, options: [], animations: {
+                cardView.transform = CGAffineTransform(rotationAngle: 2*CGFloat.pi)
+                cardView.frame = CGRect(x: self.baseView.bounds.width - cardView.bounds.width, y: self.baseView.bounds.height - cardView.bounds.height, width: cardView.bounds.width, height: cardView.bounds.height)
+            }, completion:    { finished in
                 UIView.transition(with: cardView, duration: speedOfAnime.flipTime, options: [.transitionFlipFromLeft], animations: {cardView.faceUp = false
                     
                 }, completion:nil)
